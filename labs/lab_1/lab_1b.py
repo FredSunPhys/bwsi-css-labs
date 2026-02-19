@@ -9,7 +9,7 @@ and prints the result to the terminal window.
 
 """
 
-def simple_calculator(operation: str, num1: float, num2: float) -> float:
+def simple_calculator(operation: str, num1: float, num2: float) -> (float, float, float):
     """
     Function that takes in two numbers and an operation (add, subtract, multiply, divide),
     then performs the operation on the two numbers and returns the result.
@@ -24,18 +24,20 @@ def simple_calculator(operation: str, num1: float, num2: float) -> float:
     """
 
     if operation == "add":
-        return num1 + num2
+        return num1 + num2, num1, num2
     elif operation == "subtract":
-        return num1 - num2
+        return num1 - num2, num1, num2
     elif operation == "multiply":
-        return num1 * num2
+        return num1 * num2, num1, num2
     elif operation == "divide":
         if num2 != 0:
-            return num1 / num2
+            return num1 / num2, num1, num2
         else:
-            raise ValueError("Cannot divide by zero.")
+            num2 = float(input("Cannot divide by zero, please re-enter the second number: "))
+            return simple_calculator(operation, num1, num2)
     else:
-        raise ValueError("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'.")
+        operation = input("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide': ")
+        return simple_calculator(operation, num1, num2)
 
 def main():
     
@@ -47,7 +49,7 @@ def main():
     operation = input("Enter the operation (add, subtract, multiply, divide): ").strip().lower()
 
     # Perform the calculation and display the result
-    result = simple_calculator(operation, num1, num2)
+    result, num1, num2 = simple_calculator(operation, num1, num2)
     print(f"The result of {operation}ing {num1} and {num2} is: {result}")
 
 
